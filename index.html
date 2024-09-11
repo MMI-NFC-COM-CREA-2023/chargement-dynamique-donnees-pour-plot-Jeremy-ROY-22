@@ -17,27 +17,70 @@
         <a href="#graph2">graph2</a>
     </nav>
 
-    <section>
-        <h2 id="graph1">graph 1</h2>
-        <figure>
-            <figcaption>Légende du graph</figcaption>
-        </figure>
-        <div id="graph1" class="graph"></div>
-    </section>
+    <section class="tour">
+        <section>
+            <h2 id="">graph 1</h2>
+            <figure>
+                <figcaption>Légende du graph</figcaption>
+            </figure>
+            <div id="graph1" class="graph">
+                <script type="module">
+                    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+                    const response = await fetch('tennis.json');
+                    const data = await response.json();
+                    console.log(data);
 
-    <section>
-        <h2 id="graph2">graph 2</h2>
-        <figure>
-            <figcaption>Légende du graph</figcaption>
-        </figure>
-        <div id="graph2" class="graph"></div>
-    </section>
-    <script type="module">
-        const response = await fetch('tennis.json');
-        const data = await response.json();
-        console.log(data);
+                    const plot = Plot.plot({
+                        title: "top 10 nationnalitées ",
+                        subtitle:
+                            "top 10 des nationalitées les plus présentes en victoires de tournois du grand chelem",
+                        marks: [
+                            Plot.barX(data,
+                                Plot.groupY({ x: "count" }, { y: "WINNER_NATIONALITY", tip: true, sort: { y: "x", reverse: true, limit: 10 } })
+                            ),
+                            Plot.ruleX([0])
+                        ]
+                    })
+                    const div = document.querySelector("#graph1");
+                    div.append(plot);
+                </script>
+            </div>
+        </section>
+        <span class="middle">
 
-    </script>
+        </span>
+        <section>
+            <h2 id="">graph 2</h2>
+            <figure>
+                <figcaption>Légende du graph</figcaption>
+            </figure>
+            <div id="graph2" class="graph">
+                <script type="module">
+                    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+                    const rec = await fetch('tennis.json');
+                    const donnee = await rec.json();
+                    console.log(rec);
+                    
+                    const plot2 = Plot.plot({
+                            color: { legend: true },
+                            title: "Evolution des gains du vainqueur au grand chelem",
+                            subtitle: "Evolution des gains du vainqueur en euros pour chaque tournoi du grand chelem de 1968 a 2023",
+                            marginLeft: 100,
+                            marks: [
+                                Plot.lineY(donnee, {
+                                    x: "YEAR",
+                                    y: "WINNER_PRIZE",
+                                    stroke: "TOURNAMENT",
+                                    tip: true
+                                })
+                            ]
+                        });
+                    const div2 = document.querySelector("#graph2");
+                        div2.append(plot2);
+                </script>
+            </div>
+        </section>
+    </section>
 </body>
 
 </html>
