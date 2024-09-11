@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
+nav {
+    background-color: #1d1d1d;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #d7d7d7;
+}
+
+.graph {
+    width: 300px;
+    height: 200px;
+    background-color: #ababab;
+    margin: 20px 0;
+}
