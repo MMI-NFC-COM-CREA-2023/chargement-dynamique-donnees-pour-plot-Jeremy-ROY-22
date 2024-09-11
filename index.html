@@ -32,6 +32,12 @@
         </figure>
         <div id="graph2" class="graph"></div>
     </section>
+    <script type="module">
+        const response = await fetch('tennis.json');
+        const data = await response.json();
+        console.log(data);
+
+    </script>
 </body>
 
 </html>
