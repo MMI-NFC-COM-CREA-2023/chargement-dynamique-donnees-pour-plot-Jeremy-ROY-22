@@ -19,7 +19,7 @@
 
     <section class="tour">
         <section>
-            <h2 id="">graph 1</h2>
+            <h2 id="">graph ESM</h2>
             <figure>
                 <figcaption>Légende du graph</figcaption>
             </figure>
@@ -50,16 +50,30 @@
 
         </span>
         <section>
-            <h2 id="">graph 2</h2>
+            <h2 id="">graph UMD</h2>
             <figure>
                 <figcaption>Légende du graph</figcaption>
             </figure>
             <div id="graph2" class="graph">
-                <script type="module">
-                    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
-                    const rec = await fetch('tennis.json');
-                    const donnee = await rec.json();
-                    console.log(rec);
+                <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+                <script>
+                    // import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+                    async function fetchData() {
+                        const rec = await fetch('tennis.json');
+                        const donnee = await rec.json();
+                        console.log(donnee);
+                        return donnee;
+                    }
+                    
+                    
+                    
+                    async function createPlot() {
+                        const data = await fetchData();
+                        if (!data) {
+                            console.log("pas data")
+                            return;
+                        }
                     
                     const plot2 = Plot.plot({
                             color: { legend: true },
@@ -67,7 +81,7 @@
                             subtitle: "Evolution des gains du vainqueur en euros pour chaque tournoi du grand chelem de 1968 a 2023",
                             marginLeft: 100,
                             marks: [
-                                Plot.lineY(donnee, {
+                                Plot.lineY(data, {
                                     x: "YEAR",
                                     y: "WINNER_PRIZE",
                                     stroke: "TOURNAMENT",
@@ -77,6 +91,8 @@
                         });
                     const div2 = document.querySelector("#graph2");
                         div2.append(plot2);
+                    }
+                    createPlot();
                 </script>
             </div>
         </section>
